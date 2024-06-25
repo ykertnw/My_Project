@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <fstream>
 #include <Windows.h>
 using namespace std;
 
@@ -285,6 +286,114 @@ void totalProfit(string startDate, string endDate){
 	cout << "Сумарний прибуток за період з " << startDate << " по " << endDate << ": " << total << endl << endl;
 }
 
+void saveInfo() {
+	ofstream outFile("user.txt");
+	if (outFile.is_open()) {
+		outFile << employees.size() << endl;
+		for (const auto& emp : employees) {
+			outFile << emp.workerFullName << endl;
+			outFile << emp.workerPost << endl;
+			outFile << emp.workerPhonenumber << endl;
+			outFile << emp.workerEmail << endl;
+		}
+
+		outFile << cars.size() << endl;
+		for (const auto& car : cars) {
+			outFile << car.manufacturer << endl;
+			outFile << car.carYear << endl;
+			outFile << car.carModel << endl;
+			outFile << car.costPrice << endl;
+			outFile << car.potentialSalePrice << endl;
+		}
+
+		outFile << sales.size() << endl;
+		for (const auto& sale : sales) {
+			outFile << sale.employee.workerFullName << endl;
+			outFile << sale.employee.workerPost << endl;
+			outFile << sale.employee.workerPhonenumber << endl;
+			outFile << sale.employee.workerEmail << endl;
+
+			outFile << sale.car.manufacturer << endl;
+			outFile << sale.car.carYear << endl;
+			outFile << sale.car.carModel << endl;
+			outFile << sale.car.costPrice << endl;
+			outFile << sale.car.potentialSalePrice << endl;
+
+			outFile << sale.saleDate << endl;
+			outFile << sale.actualSalePrice << endl;
+
+			outFile.close();
+			cout << "Дані збережено у файл\n\n";
+		}
+	}
+	else {
+		cout << "Помилка при відкритті файлу\n\n";
+	}
+}
+
+void loadInfo() {
+	ifstream inFile("user.txt");
+	if (inFile.is_open()) {
+		employees.clear();
+		cars.clear();
+		sales.clear();
+
+		int numEmployees;
+		inFile >> numEmployees;
+		inFile.ignore();
+		for (int i = 0; i < numEmployees; i++) {
+			Employee emp;
+			getline(inFile, emp.workerFullName);
+			getline(inFile, emp.workerPost);
+			getline(inFile, emp.workerPhonenumber);
+			getline(inFile, emp.workerEmail);
+			employees.push_back(emp);
+		}
+
+		int numCars;
+		inFile >> numCars;
+		inFile.ignore();
+		for (int i = 0; i < numCars; i++) {
+			Car car;
+			getline(inFile, car.manufacturer);
+			inFile >> car.carYear;
+			inFile.ignore();
+			getline(inFile, car.carModel);
+			inFile >> car.costPrice;
+			inFile >> car.potentialSalePrice;
+			inFile.ignore(); 
+			cars.push_back(car);
+		}
+		
+		int numSales;
+		inFile >> numSales;
+		inFile.ignore();
+		for (int i = 0; i < numSales; i++) {
+			Sale sale;
+			getline(inFile, sale.employee.workerFullName);
+			getline(inFile, sale.employee.workerPost);
+			getline(inFile, sale.employee.workerPhonenumber);
+			getline(inFile, sale.employee.workerEmail);
+			getline(inFile, sale.car.manufacturer);
+			inFile >> sale.car.carYear;
+			inFile.ignore();
+			getline(inFile, sale.car.carModel);
+			inFile >> sale.car.costPrice;
+			inFile >> sale.car.potentialSalePrice;
+			inFile.ignore();
+			getline(inFile, sale.saleDate);
+			inFile >> sale.actualSalePrice;
+			inFile.ignore();
+			sales.push_back(sale);
+		}
+		inFile.close();
+		cout << "Дані збережено у файл\n\n";
+	}
+	else {
+		cout << "Помилка при відкритті файлу\n\n";
+	}
+}
+
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -346,6 +455,9 @@ int main() {
 			cout << "7. Назва найпопулярнішого автомобіля, який продали за вказаний період час \n";
 			cout << "8. Інформація про найуспішнішого співробітника за вказаний період часу \n";
 			cout << "9. Сумарний прибуток за вказаний період часу \n";
+			cout << "10. Зберегти дані у файл\n";
+			cout << "11. Завантажити дані з файлу\n";
+			cout << "12. Вихід\n";
 			cout << "Ваш вибір: ";
 			cin >> reportChoice;
 
@@ -392,10 +504,17 @@ int main() {
 				totalProfit(profitStartDate, profitEndDate);
 				break;
 			}
+			case 10:
+				saveInfo();
+				break;
+			case 11:
+				loadInfo();
+				break;
+			case 12:
+				break;
 			default:
 				cout << "Некоректний вибір\n\n";
 			}
-
 		case 8:
 			break;
 		default:
@@ -403,6 +522,5 @@ int main() {
 		}
 	}
 	cout << "Завершення програми\n";
-
 	return 0;
 }
