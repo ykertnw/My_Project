@@ -225,7 +225,7 @@ void EmployeesSales(int empIndex) {
 		if (sale.employee.workerFullName == empName) {
 			cout << "Продажі співробітника " << empName << ":\n";
 			cout << "Продавець: " << sale.employee.workerFullName << endl;
-			cout << "Покупець: " << sale.car.manufacturer << " " << sale.car.carModel << endl;
+			cout << "Автомобіль: " << sale.car.manufacturer << " " << sale.car.carModel << endl;
 			cout << "Дата продажу: " << sale.saleDate << endl;
 			cout << "Фактична ціна продажу: " << sale.actualSalePrice << endl;
 			found = true;
@@ -233,7 +233,7 @@ void EmployeesSales(int empIndex) {
 	}
 
 	if (!found) {
-		cout << "Продажі спіробітника" << empName << " не знайдено\n\n";
+		cout << "Продажі спіробітника " << empName << " не знайдено\n\n";
 	}
 }
 
@@ -450,14 +450,13 @@ int main() {
 			cout << "2. Повна інформація про автомобіль\n";
 			cout << "3. Повна інформація про продаж\n";
 			cout << "4. Усі продажі за певну дату\n";
-			cout << "5. Усі продажі за певний період часу \n";
-			cout << "6. Всі продажі конкретного співробітника \n";
-			cout << "7. Назва найпопулярнішого автомобіля, який продали за вказаний період час \n";
-			cout << "8. Інформація про найуспішнішого співробітника за вказаний період часу \n";
-			cout << "9. Сумарний прибуток за вказаний період часу \n";
-			cout << "10. Зберегти дані у файл\n";
-			cout << "11. Завантажити дані з файлу\n";
-			cout << "12. Вихід\n";
+			cout << "5. Всі продажі конкретного співробітника \n";
+			cout << "6. Назва найпопулярнішого автомобіля, який продали за вказаний період час \n";
+			cout << "7. Інформація про найуспішнішого співробітника за вказаний період часу \n";
+			cout << "8. Сумарний прибуток за вказаний період часу \n";
+			cout << "9. Зберегти дані у файл\n";
+			cout << "10. Завантажити дані з файлу\n";
+			cout << "11. Вихід\n";
 			cout << "Ваш вибір: ";
 			cin >> reportChoice;
 
@@ -474,7 +473,13 @@ int main() {
 			case 4:
 				salesbyDate();
 				break;
-			case 5: {
+			case 5:
+				int empIndex;
+				cout << "Введіть індекс співробітника: ";
+				cin >> empIndex;
+				EmployeesSales(empIndex);
+				break;
+			case 6: {
 				string startDate, endDate;
 				cout << "Введіть початкову дату: ";
 				cin.ignore();
@@ -484,7 +489,7 @@ int main() {
 				mostSaleCar(startDate, endDate);
 				break;
 			}
-			case 6: {
+			case 7: {
 				string empStartDate, empEndDate;
 				cout << "Введіть початкову дату: ";
 				cin.ignore();
@@ -494,7 +499,7 @@ int main() {
 				mostSuccessfulEmployee(empStartDate, empEndDate);
 				break;
 			}
-			case 7: {
+			case 8: {
 				string profitStartDate, profitEndDate;
 				cout << "Введіть початкову дату: ";
 				cin.ignore();
@@ -504,13 +509,13 @@ int main() {
 				totalProfit(profitStartDate, profitEndDate);
 				break;
 			}
-			case 10:
+			case 9:
 				saveInfo();
 				break;
-			case 11:
+			case 10:
 				loadInfo();
 				break;
-			case 12:
+			case 11:
 				break;
 			default:
 				cout << "Некоректний вибір\n\n";
