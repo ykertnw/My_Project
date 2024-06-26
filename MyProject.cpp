@@ -188,7 +188,7 @@ void carReport() {
 void saleReport() {
 	for (const auto& sale : sales) {
 		cout << "Повна інформація про продаж:\n";
-		cout << "Продавець: " << sale.employee.workerFullName;
+		cout << "Продавець: " << sale.employee.workerFullName << endl;
 		cout << "Покупець: " << sale.car.manufacturer << " " << sale.car.carModel << endl;
 		cout << "Дата продажу: " << sale.saleDate << endl;
 		cout << "Фактична ціна продажу: " << sale.actualSalePrice << endl << endl;
